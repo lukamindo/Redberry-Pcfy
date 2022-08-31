@@ -1,4 +1,5 @@
 import React from "react";
+import { Controller } from "react-hook-form";
 import Select from "react-select";
 
 const DropdownSelect = ({
@@ -6,8 +7,9 @@ const DropdownSelect = ({
   width,
   options,
   margin,
-  register,
-  required,
+  name,
+  control,
+  errors,
 }) => {
   const customStyles = {
     container: (styles) => ({
@@ -19,7 +21,7 @@ const DropdownSelect = ({
     control: (styles) => ({
       ...styles,
       backgroundColor: "#EBEBEB",
-      border: "none",
+      border: errors?.[name] ? "1.8px solid #E52F2F" : "none",
       boxShadow: "none",
       borderRadius: "8px",
     }),
@@ -70,13 +72,21 @@ const DropdownSelect = ({
   };
 
   return (
-    <Select
-      options={options}
-      styles={customStyles}
-      placeholder={placeholder}
-      isSearchable={false}
-      {...register(placeholder, { required })}
-    />
+    <>
+      <Controller
+        name={name}
+        control={control}
+        render={({ field }) => (
+          <Select
+            options={options}
+            styles={customStyles}
+            placeholder={placeholder}
+            isSearchable={false}
+            {...field}
+          />
+        )}
+      />
+    </>
   );
 };
 

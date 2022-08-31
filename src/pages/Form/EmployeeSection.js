@@ -10,6 +10,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 function EmployeeSection({ padding }) {
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -52,16 +53,20 @@ function EmployeeSection({ padding }) {
         />
       </StyledTwoInputWrapper>
       <DropdownSelect
+        name="თიმი"
         options={options}
-        register={register}
+        control={control}
+        errors={errors}
         placeholder="თიმი"
         width="878px"
         margin="52px 0 0 0 "
       />
 
       <DropdownSelect
+        name="პოზიცია"
         options={options}
-        register={register}
+        control={control}
+        errors={errors}
         placeholder="პოზიცია"
         width="878px"
         margin="53px 0 0 0 "

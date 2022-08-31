@@ -16,7 +16,7 @@ const FormInput = ({
   width,
   errors,
 }) => (
-  <StyledInputWrapper margin={margin} errors={errors?.[label]}>
+  <StyledInputWrapper margin={margin} errors={errors?.[name]}>
     {label && <StyledInputLabel>{label}</StyledInputLabel>}
     <StyledInput
       width={width}

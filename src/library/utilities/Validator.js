@@ -15,6 +15,14 @@ export const schemaEmployee = yup.object().shape({
     .matches(geoRegex, "გამოიყენე ქართული ასოები")
     .min(2, "უნდა შეიცვადეს მინიმუმ 2 სიმბოლოს")
     .required("ველის შევსება სავალდებულოა"),
+  თიმი: yup.object().shape({
+    value: yup.string().required(),
+    label: yup.string().required(),
+  }),
+  პოზიცია: yup.object().shape({
+    value: yup.string().required(),
+    label: yup.string().required(),
+  }),
   მეილი: yup
     .string()
     .email()
