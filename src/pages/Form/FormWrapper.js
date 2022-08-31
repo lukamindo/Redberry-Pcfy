@@ -2,9 +2,9 @@ import EmployeeSection from "./EmployeeSection";
 
 function FormWrapper() {
   return (
-    <div>
-      <EmployeeSection />
-    </div>
+    <>
+      <EmployeeSection padding="96px 174px 44px 174px" />
+    </>
   );
 }
 
