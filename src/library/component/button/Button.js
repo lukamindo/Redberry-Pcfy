@@ -1,4 +1,5 @@
 import React from "react";
+import { StyledButton } from "./Button.styled";
 
 const Button = ({
   border = "none",
@@ -13,21 +14,19 @@ const Button = ({
   margin,
 }) => {
   return (
-    <button
+    <StyledButton
       onClick={onClick}
-      style={{
-        backgroundColor: color,
-        border,
-        borderRadius: radius,
-        height,
-        width,
-        fontSize: font,
-        color: fontColor,
-        margin,
-      }}
+      border={border}
+      color={color}
+      radius={radius}
+      width={width}
+      height={height}
+      font={font}
+      fontColor={fontColor}
+      margin={margin}
     >
       {children}
-    </button>
+    </StyledButton>
   );
 };
 
