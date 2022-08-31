@@ -15,3 +15,8 @@ code {
 p {
   margin: 0;
 }
+
+@font-face {
+  font-family: HelveticaNeue;
+  src: url(/src/assets/fonts/HelveticaNeue.ttc);
+}
