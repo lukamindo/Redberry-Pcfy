@@ -39,7 +39,7 @@ const DropdownSelect = ({
     }),
     menu: (styles) => ({
       ...styles,
-      width: "878px",
+      width: width,
       margin: "0",
       borderRadius: "8px",
       filter: "drop-shadow(0px 4px 34px rgba(0, 0, 0, 0.25))",

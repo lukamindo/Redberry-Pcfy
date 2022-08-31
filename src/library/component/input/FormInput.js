@@ -13,7 +13,7 @@ const FormInput = ({
   hintMessage,
   placeholder,
   margin,
-  width,
+  width = "363.4px",
   errors,
 }) => (
   <StyledInputWrapper margin={margin} errors={errors?.[name]}>

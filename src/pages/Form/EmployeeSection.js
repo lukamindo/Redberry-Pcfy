@@ -2,7 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import Button from "library/component/button/Button";
 import Input from "library/component/input/FormInput";
-import { StyledForm, StyledTwoInputWrapper } from "./FormWrapper.styled";
+import { StyledForm, StyledEmployeeSectionOne } from "./FormWrapper.styled";
 import DropdownSelect from "library/component/react-select/DropdownSelect";
 import { schemaEmployee } from "library/utilities/Validator";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -30,7 +30,7 @@ function EmployeeSection({ padding }) {
 
   return (
     <StyledForm padding={padding} onSubmit={handleSubmit(onSubmit)}>
-      <StyledTwoInputWrapper>
+      <StyledEmployeeSectionOne>
         <Input
           hintMessage="მინიმუმ 2 სიმბოლო, ქართული ასოები"
           label="სახელი"
@@ -39,7 +39,6 @@ function EmployeeSection({ padding }) {
           register={register}
           placeholder="გრიშა"
           margin="0px 63px 0px 0px"
-          width="372.4px"
         />
 
         <Input
@@ -49,9 +48,8 @@ function EmployeeSection({ padding }) {
           errors={errors}
           register={register}
           placeholder="ბაგრატიონი"
-          width="372.4px"
         />
-      </StyledTwoInputWrapper>
+      </StyledEmployeeSectionOne>
       <DropdownSelect
         name="თიმი"
         options={options}
