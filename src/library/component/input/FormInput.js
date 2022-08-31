@@ -6,11 +6,28 @@ import {
   StyledInput,
 } from "./FormInput.styled";
 
-const FormInput = ({ label, register, required, hintMessage, placeholder }) => (
-  <StyledInputWrapper>
+const FormInput = ({
+  name,
+  label,
+  register,
+  hintMessage,
+  placeholder,
+  margin,
+  width,
+  errors,
+}) => (
+  <StyledInputWrapper margin={margin} errors={errors?.[label]}>
     {label && <StyledInputLabel>{label}</StyledInputLabel>}
-    <StyledInput placeholder={placeholder} {...register(label, { required })} />
-    {hintMessage && <StyledInputMessage>{hintMessage}</StyledInputMessage>}
+    <StyledInput
+      width={width}
+      type="text"
+      placeholder={placeholder}
+      {...register(name)}
+    />
+    {(errors?.[name] && (
+      <StyledInputMessage>{errors?.[name].message}</StyledInputMessage>
+    )) ||
+      (hintMessage && <StyledInputMessage>{hintMessage}</StyledInputMessage>)}
   </StyledInputWrapper>
 );
 
