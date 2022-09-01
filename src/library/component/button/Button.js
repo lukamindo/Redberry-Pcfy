@@ -3,7 +3,7 @@ import { StyledButton } from "./Button.styled";
 
 const Button = ({
   border = "none",
-  color = "#62A1EB",
+  backgroundColor = "#62A1EB",
   children,
   onClick,
   radius = "8px",
@@ -17,7 +17,7 @@ const Button = ({
     <StyledButton
       onClick={onClick}
       border={border}
-      color={color}
+      backgroundColor={backgroundColor}
       radius={radius}
       width={width}
       height={height}
