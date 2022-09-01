@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Button from "library/component/button/Button";
-import Input from "library/component/input/FormInput";
+import Input from "library/component/input/TextInput";
 import {
+  RadioButtonWrapper,
   StyledForm,
   StyledInLineInputsWrapper,
   StyledLaptopSectionOne,
@@ -12,6 +13,7 @@ import {
 import DropdownSelect from "library/component/react-select/DropdownSelect";
 import { schemaEmployee } from "library/utilities/Validator";
 import { yupResolver } from "@hookform/resolvers/yup";
+import RadioButtonGroup from "library/component/radiobuttons/RadioButtonGroup";
 
 function LaptopSection({ padding }) {
   const {
@@ -24,9 +26,42 @@ function LaptopSection({ padding }) {
     // resolver: yupResolver(schemaEmployee),
   });
 
+  const [laptopMemory, setLaptopMemory] = useState("");
+  const [laptopCondition, setLaptopCondition] = useState("");
+
+  const laptopMemoryHandler = (e) => {
+    setLaptopMemory(e.target.value);
+  };
+
+  const laptopConditionHandler = (e) => {
+    setLaptopCondition(e.target.value);
+  };
+
   const onSubmit = (data) => {
     console.log(data);
   };
+
+  const LAPTOP_MEMORY_DATA = [
+    {
+      id: "1",
+      value: "SSD",
+    },
+    {
+      id: "2",
+      value: "HDD",
+    },
+  ];
+
+  const LAPTOP_CONDITION_DATA = [
+    {
+      id: "1",
+      value: "ახალი",
+    },
+    {
+      id: "2",
+      value: "მეორადი",
+    },
+  ];
 
   const options = [
     { value: "chocolate", label: "Chocolate" },
@@ -97,7 +132,11 @@ function LaptopSection({ padding }) {
             register={register}
             placeholder="16"
           />
-          //radio
+          <RadioButtonGroup
+            data={LAPTOP_MEMORY_DATA}
+            handler={laptopMemoryHandler}
+            state={laptopMemory}
+          />
         </StyledInLineInputsWrapper>
       </StyledLaptopSectionTwo>
 
@@ -120,7 +159,13 @@ function LaptopSection({ padding }) {
             placeholder="0000"
           />
         </StyledInLineInputsWrapper>
-        <StyledInLineInputsWrapper>//radio</StyledInLineInputsWrapper>
+        <StyledInLineInputsWrapper>
+          <RadioButtonGroup
+            data={LAPTOP_CONDITION_DATA}
+            handler={laptopConditionHandler}
+            state={laptopCondition}
+          />
+        </StyledInLineInputsWrapper>
       </StyledLaptopSectionThree>
       <StyledInLineInputsWrapper>
         <Button width="219px" margin="95px 0 0 702px">

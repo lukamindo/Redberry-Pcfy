@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import Button from "library/component/button/Button";
-import Input from "library/component/input/FormInput";
+import Input from "library/component/input/TextInput";
 import { StyledForm, StyledEmployeeSectionOne } from "./FormWrapper.styled";
 import DropdownSelect from "library/component/react-select/DropdownSelect";
 import { schemaEmployee } from "library/utilities/Validator";

@@ -37,3 +37,11 @@ export const StyledInLineInputsWrapper = styled.div`
   justify-content: space-between;
   padding-top: 50px;
 `;
+
+export const RadioButtonWrapper = styled.div`
+  /* display: flex; */
+  p {
+    font-weight: 500;
+    font-size: 18px;
+  }
+`;
