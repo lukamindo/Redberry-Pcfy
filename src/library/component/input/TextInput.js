@@ -4,12 +4,13 @@ import {
   StyledInputLabel,
   StyledInputMessage,
   StyledInput,
-} from "./FormInput.styled";
+} from "./TextInput.styled";
 
-const FormInput = ({
+const TextInput = ({
   name,
   label,
   register,
+  onchange,
   hintMessage,
   placeholder,
   margin,
@@ -31,4 +32,4 @@ const FormInput = ({
   </StyledInputWrapper>
 );
 
-export default FormInput;
+export default TextInput;
