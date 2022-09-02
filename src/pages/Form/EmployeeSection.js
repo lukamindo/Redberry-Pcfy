@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Button from "library/component/button/Button";
 import Input from "library/component/input/TextInput";
@@ -8,15 +8,45 @@ import { schemaEmployee } from "library/utilities/Validator";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 function EmployeeSection({ padding }) {
+  const [employeeSectionData, setEmployeeSectionData] = useState(
+    JSON.parse(window.localStorage.getItem("EMPLOYEE_SECTION_DATA"))
+  );
+
   const {
     register,
     control,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm({
     mode: "onSubmit",
     resolver: yupResolver(schemaEmployee),
+    defaultValues: {
+      სახელი: employeeSectionData?.სახელი,
+      გვარი: employeeSectionData?.გვარი,
+      მეილი: employeeSectionData?.მეილი,
+      ტელეფონის_ნომერი: employeeSectionData?.ტელეფონის_ნომერი,
+      თიმი: employeeSectionData?.თიმი,
+      პოზიცია: employeeSectionData?.პოზიცია,
+    },
   });
+
+  useEffect(() => {
+    window.localStorage.setItem(
+      "EMPLOYEE_SECTION_DATA",
+      JSON.stringify(employeeSectionData)
+    );
+  }, [employeeSectionData]);
+
+  useEffect(() => {
+    const subscribe = watch((data) => {
+      setEmployeeSectionData(data);
+    });
+
+    return () => {
+      subscribe.unsubscribe();
+    };
+  }, [watch]);
 
   const onSubmit = (data) => {
     console.log(data);

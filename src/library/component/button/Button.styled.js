@@ -10,4 +10,5 @@ export const StyledButton = styled.button`
   color: ${(props) => props.fontColor};
   font-size: ${(props) => props.font};
   font-weight: 500;
+  text-align: ${(props) => props.textAlign};
 `;

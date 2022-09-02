@@ -12,6 +12,7 @@ const Button = ({
   font = "20px",
   fontColor = "#ffffff",
   margin,
+  textAlign = "center",
 }) => {
   return (
     <StyledButton
@@ -24,6 +25,7 @@ const Button = ({
       font={font}
       fontColor={fontColor}
       margin={margin}
+      textAlign={textAlign}
     >
       {children}
     </StyledButton>

@@ -168,9 +168,16 @@ function LaptopSection({ padding }) {
         </StyledInLineInputsWrapper>
       </StyledLaptopSectionThree>
       <StyledInLineInputsWrapper>
-        <Button width="219px" margin="95px 0 0 702px">
-          დამახსოვრება
+        <Button
+          font="18px"
+          backgroundColor="#ffffff"
+          textAlign="left"
+          width="297px"
+          fontColor="#0089A7"
+        >
+          უკან
         </Button>
+        <Button width="219px">დამახსოვრება</Button>
       </StyledInLineInputsWrapper>
     </StyledForm>
   );
