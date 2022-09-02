@@ -7,11 +7,14 @@ export default function RadioButton({
   onChange,
   id,
   isSelected,
+  register,
+  name,
 }) {
   return (
     <StyledRadioContainer>
       <input
         type="radio"
+        {...register(name)}
         checked={isSelected === value}
         id={id}
         onChange={onChange}

@@ -39,9 +39,20 @@ export const StyledInLineInputsWrapper = styled.div`
 `;
 
 export const RadioButtonWrapper = styled.div`
-  /* display: flex; */
-  p {
+  display: flex;
+  flex-direction: column;
+`;
+
+export const StyledRadioSection = styled.div`
+  display: flex;
+  > p {
     font-weight: 500;
     font-size: 18px;
+    color: ${(props) => props.errors && "#E52F2F"};
+  }
+
+  img {
+    width: 22px;
+    height: 20px;
   }
 `;

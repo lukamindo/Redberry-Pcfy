@@ -31,5 +31,4 @@ const TextInput = ({
       (hintMessage && <StyledInputMessage>{hintMessage}</StyledInputMessage>)}
   </StyledInputWrapper>
 );
-
 export default TextInput;

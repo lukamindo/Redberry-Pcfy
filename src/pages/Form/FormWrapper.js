@@ -5,7 +5,7 @@ import { StyledFormWrapper } from "./FormWrapper.styled";
 import LaptopSection from "./LaptopSection";
 
 function FormWrapper() {
-  const [formPage, setFormPage] = useState("employee");
+  const [formPage, setFormPage] = useState("laptop");
 
   return (
     <StyledFormWrapper>
