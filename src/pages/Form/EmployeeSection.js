@@ -6,10 +6,19 @@ import { StyledForm, StyledEmployeeSectionOne } from "./FormWrapper.styled";
 import DropdownSelect from "library/component/react-select/DropdownSelect";
 import { schemaEmployee } from "library/utilities/Validator";
 import { yupResolver } from "@hookform/resolvers/yup";
+import useGetFetch from "library/utilities/useGetFetch";
+import FromatedTextInput from "library/component/input/FromatedTextInput";
 
 function EmployeeSection({ padding }) {
   const [employeeSectionData, setEmployeeSectionData] = useState(
-    JSON.parse(window.localStorage.getItem("EMPLOYEE_SECTION_DATA"))
+    JSON.parse(window.sessionStorage.getItem("EMPLOYEE_SECTION_DATA"))
+  );
+
+  const { data: team } = useGetFetch(
+    "https://pcfy.redberryinternship.ge/api/teams"
+  );
+  const { data: position } = useGetFetch(
+    "https://pcfy.redberryinternship.ge/api/positions"
   );
 
   const {
@@ -22,17 +31,17 @@ function EmployeeSection({ padding }) {
     mode: "onSubmit",
     resolver: yupResolver(schemaEmployee),
     defaultValues: {
-      სახელი: employeeSectionData?.სახელი,
-      გვარი: employeeSectionData?.გვარი,
-      მეილი: employeeSectionData?.მეილი,
-      ტელეფონის_ნომერი: employeeSectionData?.ტელეფონის_ნომერი,
-      თიმი: employeeSectionData?.თიმი,
-      პოზიცია: employeeSectionData?.პოზიცია,
+      name: employeeSectionData?.name,
+      surname: employeeSectionData?.surname,
+      team_id: employeeSectionData?.team_id,
+      position_id: employeeSectionData?.position_id,
+      phone_number: employeeSectionData?.phone_number,
+      email: employeeSectionData?.email,
     },
   });
 
   useEffect(() => {
-    window.localStorage.setItem(
+    window.sessionStorage.setItem(
       "EMPLOYEE_SECTION_DATA",
       JSON.stringify(employeeSectionData)
     );
@@ -40,6 +49,7 @@ function EmployeeSection({ padding }) {
 
   useEffect(() => {
     const subscribe = watch((data) => {
+      // console.log(data);
       setEmployeeSectionData(data);
     });
 
@@ -52,19 +62,13 @@ function EmployeeSection({ padding }) {
     console.log(data);
   };
 
-  const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-  ];
-
   return (
     <StyledForm padding={padding} onSubmit={handleSubmit(onSubmit)}>
       <StyledEmployeeSectionOne>
         <Input
           hintMessage="მინიმუმ 2 სიმბოლო, ქართული ასოები"
           label="სახელი"
-          name="სახელი"
+          name="name"
           errors={errors}
           register={register}
           placeholder="გრიშა"
@@ -74,15 +78,15 @@ function EmployeeSection({ padding }) {
         <Input
           hintMessage="მინიმუმ 2 სიმბოლო, ქართული ასოები"
           label="გვარი"
-          name="გვარი"
+          name="surname"
           errors={errors}
           register={register}
           placeholder="ბაგრატიონი"
         />
       </StyledEmployeeSectionOne>
       <DropdownSelect
-        name="თიმი"
-        options={options}
+        name="team_id"
+        options={team}
         control={control}
         errors={errors}
         placeholder="თიმი"
@@ -91,19 +95,20 @@ function EmployeeSection({ padding }) {
       />
 
       <DropdownSelect
-        name="პოზიცია"
-        options={options}
+        name="position_id"
+        options={position}
         control={control}
         errors={errors}
         placeholder="პოზიცია"
         width="878px"
         margin="53px 0 0 0 "
+        onChange={(option) => console.log(option)}
       />
 
       <Input
         hintMessage="უნდა მთავრდებოდეს @redberry.ge-ით"
         label="მეილი"
-        name="მეილი"
+        name="email"
         errors={errors}
         register={register}
         placeholder="grish666@redberry.ge"
@@ -111,11 +116,12 @@ function EmployeeSection({ padding }) {
         width="842.4px"
       />
 
-      <Input
+      <FromatedTextInput
         hintMessage="უნდა აკმაყოფილებდეს ქართული მობ-ნომრის ფორმატს"
         label="ტელეფონის ნომერი"
-        name="ტელეფონის_ნომერი"
-        register={register}
+        name="phone_number"
+        control={control}
+        formatType="phone"
         errors={errors}
         placeholder="+995 598 00 07 01"
         margin="48px 0 0 0"

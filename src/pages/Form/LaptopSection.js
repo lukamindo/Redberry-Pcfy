@@ -13,10 +13,19 @@ import DropdownSelect from "library/component/react-select/DropdownSelect";
 import { schemaLaptop } from "library/utilities/Validator";
 import { yupResolver } from "@hookform/resolvers/yup";
 import RadioButtonGroup from "library/component/radiobuttons/RadioButtonGroup";
+import useGetFetch from "library/utilities/useGetFetch";
+import FromatedTextInput from "library/component/input/FromatedTextInput";
 
 function LaptopSection({ padding }) {
   const [laptopSectionData, setLaptopSectionData] = useState(
-    JSON.parse(window.localStorage.getItem("LAPTOP_SECTION_DATA"))
+    JSON.parse(window.sessionStorage.getItem("LAPTOP_SECTION_DATA"))
+  );
+
+  const { data: cpus } = useGetFetch(
+    "https://pcfy.redberryinternship.ge/api/cpus"
+  );
+  const { data: brands } = useGetFetch(
+    "https://pcfy.redberryinternship.ge/api/brands"
   );
 
   const {
@@ -27,18 +36,18 @@ function LaptopSection({ padding }) {
     formState: { errors },
   } = useForm({
     mode: "onSubmit",
-    // resolver: yupResolver(schemaLaptop),
+    resolver: yupResolver(schemaLaptop),
     defaultValues: {
-      ლეპტოპის_სახელი: laptopSectionData?.ლეპტოპის_სახელი,
-      ლეპტოპის_ბრენდი: laptopSectionData?.ლეპტოპის_ბრენდი,
-      CPU: laptopSectionData?.CPU,
-      CPU_ბირთვი: laptopSectionData?.CPU_ბირთვი,
-      CPU_ნაკადი: laptopSectionData?.CPU_ნაკადი,
-      RAM: laptopSectionData?.["RAM"],
-      მეხსიერების_ტიპი: laptopSectionData?.მეხსიერების_ტიპი,
-      შეძენის_რიცხვი: laptopSectionData?.შეძენის_რიცხვი,
-      ფასი: laptopSectionData?.ფასი,
-      მდგომარეობა: laptopSectionData?.მდგომარეობა,
+      laptop_name: laptopSectionData?.laptop_name,
+      laptop_brand_id: laptopSectionData?.laptop_brand_id,
+      laptop_cpu: laptopSectionData?.laptop_cpu,
+      laptop_cpu_cores: laptopSectionData?.laptop_cpu_cores,
+      laptop_cpu_threads: laptopSectionData?.laptop_cpu_threads,
+      laptop_ram: laptopSectionData?.laptop_ram,
+      laptop_hard_drive_type: laptopSectionData?.laptop_hard_drive_type,
+      laptop_state: laptopSectionData?.laptop_state,
+      laptop_purchase_date: laptopSectionData?.laptop_purchase_date,
+      laptop_price: laptopSectionData?.laptop_price,
     },
   });
 
@@ -53,22 +62,11 @@ function LaptopSection({ padding }) {
   }, [watch]);
 
   useEffect(() => {
-    window.localStorage.setItem(
+    window.sessionStorage.setItem(
       "LAPTOP_SECTION_DATA",
       JSON.stringify(laptopSectionData)
     );
   }, [laptopSectionData]);
-
-  const [laptopMemory, setLaptopMemory] = useState("");
-  const [laptopCondition, setLaptopCondition] = useState("");
-
-  const laptopMemoryHandler = (e) => {
-    setLaptopMemory(e.target.value);
-  };
-
-  const laptopConditionHandler = (e) => {
-    setLaptopCondition(e.target.value);
-  };
 
   const onSubmit = (data) => {
     console.log(data);
@@ -78,32 +76,26 @@ function LaptopSection({ padding }) {
     {
       id: "1",
       value: "SSD",
-      register: "მეხსიერების_ტიპი",
+      register: "laptop_hard_drive_type",
     },
     {
       id: "2",
       value: "HDD",
-      register: "მეხსიერების_ტიპი",
+      register: "laptop_hard_drive_type",
     },
   ];
 
   const LAPTOP_CONDITION_DATA = [
     {
-      id: "1",
+      id: "3",
       value: "ახალი",
-      register: "მდგომარეობა",
+      register: "laptop_state",
     },
     {
-      id: "2",
+      id: "4",
       value: "მეორადი",
-      register: "მდგომარეობა",
+      register: "laptop_state",
     },
-  ];
-
-  const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
   ];
 
   return (
@@ -114,15 +106,15 @@ function LaptopSection({ padding }) {
             <Input
               hintMessage="ლათინური ასოები, ციფრები, !@#$%^&*()_+="
               label="ლეპტოპის სახელი"
-              name="ლეპტოპის_სახელი"
+              name="laptop_name"
               errors={errors}
               register={register}
               placeholder="HP"
               margin="0 63px 0 0 "
             />
             <DropdownSelect
-              name="ლეპტოპის_ბრენდი"
-              options={options}
+              name="laptop_brand_id"
+              options={cpus}
               control={control}
               errors={errors}
               placeholder="ლეპტოპის ბრენდი"
@@ -134,8 +126,8 @@ function LaptopSection({ padding }) {
         <StyledLaptopSectionTwo>
           <StyledInLineInputsWrapper>
             <DropdownSelect
-              name="CPU"
-              options={options}
+              name="laptop_cpu"
+              options={brands}
               control={control}
               errors={errors}
               placeholder="CPU"
@@ -145,7 +137,7 @@ function LaptopSection({ padding }) {
             <Input
               hintMessage="მხოლოდ ციფრები"
               label="CPU-ს ბირთვი"
-              name="CPU_ბირთვი"
+              name="laptop_cpu_cores"
               errors={errors}
               register={register}
               placeholder="14"
@@ -154,7 +146,7 @@ function LaptopSection({ padding }) {
             <Input
               hintMessage="მხოლოდ ციფრები"
               label="CPU-ს ნაკადი"
-              name="CPU_ნაკადი"
+              name="laptop_cpu_threads"
               errors={errors}
               register={register}
               placeholder="365"
@@ -165,7 +157,7 @@ function LaptopSection({ padding }) {
             <Input
               hintMessage="მხოლოდ ციფრები"
               label="ლეპტოპის RAM (GB)"
-              name="RAM"
+              name="laptop_ram"
               errors={errors}
               register={register}
               placeholder="16"
@@ -173,27 +165,27 @@ function LaptopSection({ padding }) {
             <RadioButtonGroup
               title="მეხსიერების ტიპი"
               data={LAPTOP_MEMORY_DATA}
-              handler={laptopMemoryHandler}
               errors={errors}
-              state={laptopMemory}
+              state={laptopSectionData?.laptop_hard_drive_type}
             />
           </StyledInLineInputsWrapper>
         </StyledLaptopSectionTwo>
 
         <StyledLaptopSectionThree>
           <StyledInLineInputsWrapper>
-            <Input
+            <FromatedTextInput
               label="შეძენის რიცხვი (არჩევითი)"
-              name="შეძენის_რიცხვი"
+              name="laptop_purchase_date"
+              control={control}
+              formatType="date"
               errors={errors}
-              register={register}
               placeholder="დდ / თთ / წწწწ"
               margin="0 0 18.66px 0"
             />
             <Input
               hintMessage="მხოლოდ ციფრები"
               label="ლეპტოპის ფასი"
-              name="ფასი"
+              name="laptop_price"
               errors={errors}
               register={register}
               placeholder="0000"
@@ -204,8 +196,7 @@ function LaptopSection({ padding }) {
               title="ლეპტოპის მდგომარეობა"
               data={LAPTOP_CONDITION_DATA}
               errors={errors}
-              handler={laptopConditionHandler}
-              state={laptopCondition}
+              state={laptopSectionData?.laptop_state}
             />
           </StyledInLineInputsWrapper>
         </StyledLaptopSectionThree>
