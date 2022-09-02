@@ -7,67 +7,67 @@ const laptopNameRegex = /^[a-zA-Z0-9!@#$%^&*()_+=]*$/;
 const onlyNumberRegex = /^[0-9]*$/;
 
 export const schemaEmployee = yup.object().shape({
-  სახელი: yup
+  name: yup
     .string()
     .matches(geoRegex, "გამოიყენე ქართული ასოები")
     .min(2, "უნდა შეიცვადეს მინიმუმ 2 სიმბოლოს")
     .required("ველის შევსება სავალდებულოა"),
-  გვარი: yup
+  surname: yup
     .string()
     .matches(geoRegex, "გამოიყენე ქართული ასოები")
     .min(2, "უნდა შეიცვადეს მინიმუმ 2 სიმბოლოს")
     .required("ველის შევსება სავალდებულოა"),
-  თიმი: yup.object().shape({
-    value: yup.string().required(),
-    label: yup.string().required(),
+  team_id: yup.object().shape({
+    id: yup.number().required(),
+    name: yup.string().required(),
   }),
-  პოზიცია: yup.object().shape({
-    value: yup.string().required(),
-    label: yup.string().required(),
+  position_id: yup.object().shape({
+    id: yup.number().required(),
+    name: yup.string().required(),
   }),
-  მეილი: yup
+  email: yup
     .string()
     .email()
     .matches(emailRegex, "გამოიყენე @redberry.ge-ს იმეილი")
     .required("ველის შევსება სავალდებულოა"),
-  ტელეფონის_ნომერი: yup
+  phone_number: yup
     .string()
     .matches(numberRegex, "გამოიყენე ქართული მობ-ნომრის ფორმატი")
     .required("ველის შევსება სავალდებულოა"),
 });
 
 export const schemaLaptop = yup.object().shape({
-  ლეპტოპის_სახელი: yup
+  laptop_name: yup
     .string()
     .matches(
       laptopNameRegex,
       "შესაძლებელია შეიცავდეს მხოლოდ ლათინურ სიმბოლოებს, რიცხვებსა და !@#$%^&*()_+="
     )
     .required("ველის შევსება სავალდებულოა"),
-  ლეპტოპის_ბრენდი: yup.object().shape({
+  laptop_brand_id: yup.object().shape({
     value: yup.string().required(),
     label: yup.string().required(),
   }),
-  CPU: yup.object().shape({
+  laptop_cpu: yup.object().shape({
     value: yup.string().required(),
     label: yup.string().required(),
   }),
-  CPU_ბირთვი: yup
+  laptop_cpu_cores: yup
     .string()
     .matches(onlyNumberRegex, "მხოლოდ ციფრები")
     .required("ველის შევსება სავალდებულოა"),
-  CPU_ნაკადი: yup
+  laptop_cpu_threads: yup
     .string()
     .matches(onlyNumberRegex, "მხოლოდ ციფრები")
     .required("ველის შევსება სავალდებულოა"),
-  RAM: yup
+  laptop_ram: yup
     .string()
     .matches(onlyNumberRegex, "მხოლოდ ციფრები")
     .required("ველის შევსება სავალდებულოა"),
-  ფასი: yup
+  laptop_price: yup
     .string()
     .matches(onlyNumberRegex, "მხოლოდ ციფრები")
     .required("ველის შევსება სავალდებულოა"),
-  მეხსიერების_ტიპი: yup.string().required(),
-  მდგომარეობა: yup.string().required(),
+  laptop_hard_drive_type: yup.string().required(),
+  laptop_state: yup.string().required(),
 });
