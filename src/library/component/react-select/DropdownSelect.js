@@ -78,6 +78,8 @@ const DropdownSelect = ({
         control={control}
         render={({ field }) => (
           <Select
+            getOptionLabel={(option) => option.name}
+            getOptionValue={(option) => option.id}
             options={options}
             styles={customStyles}
             placeholder={placeholder}
