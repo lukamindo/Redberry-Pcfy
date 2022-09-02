@@ -1,4 +1,5 @@
 import React from "react";
+import { useFormContext } from "react-hook-form";
 import { StyledRadioContainer } from "./RadioButton.styled";
 
 export default function RadioButton({
@@ -6,21 +7,23 @@ export default function RadioButton({
   value,
   onChange,
   id,
-  isSelected,
-  register,
+  state,
   name,
 }) {
+  const formContext = useFormContext();
   return (
     <StyledRadioContainer>
-      <input
-        type="radio"
-        {...register(name)}
-        checked={isSelected === value}
-        id={id}
-        onChange={onChange}
-        value={value}
-      />
-      <p>{label}</p>
+      <label>
+        <input
+          type="radio"
+          id={id}
+          checked={state === value}
+          onChange={onChange}
+          value={value}
+          {...formContext.register(name)}
+        />
+        <p>{label}</p>
+      </label>
     </StyledRadioContainer>
   );
 }
