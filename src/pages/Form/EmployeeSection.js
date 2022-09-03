@@ -9,7 +9,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import useGetFetch from "library/utilities/useGetFetch";
 import FromatedTextInput from "library/component/input/FromatedTextInput";
 
-function EmployeeSection({ padding }) {
+function EmployeeSection({
+  padding,
+  setFormData,
+  setFormPage,
+  setEmployeeFormIsValid,
+}) {
   const [employeeSectionData, setEmployeeSectionData] = useState(
     JSON.parse(window.sessionStorage.getItem("EMPLOYEE_SECTION_DATA"))
   );
@@ -21,13 +26,7 @@ function EmployeeSection({ padding }) {
     "https://pcfy.redberryinternship.ge/api/positions"
   );
 
-  const {
-    register,
-    control,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm({
+  const { register, control, handleSubmit, watch, formState } = useForm({
     mode: "onSubmit",
     resolver: yupResolver(schemaEmployee),
     defaultValues: {
@@ -39,6 +38,12 @@ function EmployeeSection({ padding }) {
       email: employeeSectionData?.email,
     },
   });
+
+  const { errors, isValid } = formState;
+
+  useEffect(() => {
+    setEmployeeFormIsValid(isValid);
+  }, [formState]);
 
   useEffect(() => {
     window.sessionStorage.setItem(
@@ -59,7 +64,8 @@ function EmployeeSection({ padding }) {
   }, [watch]);
 
   const onSubmit = (data) => {
-    console.log(data);
+    setFormData(data);
+    if (isValid) setFormPage("laptop");
   };
 
   return (

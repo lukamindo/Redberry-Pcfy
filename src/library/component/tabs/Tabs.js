@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { ButtonGroup, Tab } from "./Tabs.styled";
 
-export default function TabGroup({ active, setActiveHandler, tabs }) {
-  const types = [
-    { title: "თანამშრომლის ინფო", page: "employee" },
-    { title: "ლეპტოპის მახასიათებლები", page: "laptop" },
-    ,
-  ];
+export default function TabGroup({
+  active,
+  setActiveHandler,
+  tabs,
+  employeeFormIsValid,
+}) {
   return (
     <>
       <ButtonGroup>
@@ -14,7 +14,9 @@ export default function TabGroup({ active, setActiveHandler, tabs }) {
           <Tab
             key={type.title}
             active={active === type.page}
-            onClick={() => setActiveHandler(type.page)}
+            onClick={
+              employeeFormIsValid ? () => setActiveHandler(type.page) : null
+            }
           >
             {type.title}
           </Tab>

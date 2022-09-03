@@ -15,8 +15,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import RadioButtonGroup from "library/component/radiobuttons/RadioButtonGroup";
 import useGetFetch from "library/utilities/useGetFetch";
 import FromatedTextInput from "library/component/input/FromatedTextInput";
+import { useNavigate } from "react-router-dom";
 
-function LaptopSection({ padding }) {
+function LaptopSection({ padding, formData, setFormData }) {
   const [laptopSectionData, setLaptopSectionData] = useState(
     JSON.parse(window.sessionStorage.getItem("LAPTOP_SECTION_DATA"))
   );
@@ -33,7 +34,7 @@ function LaptopSection({ padding }) {
     control,
     handleSubmit,
     watch,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm({
     mode: "onSubmit",
     resolver: yupResolver(schemaLaptop),
@@ -50,6 +51,8 @@ function LaptopSection({ padding }) {
       laptop_price: laptopSectionData?.laptop_price,
     },
   });
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const subscribe = watch((data) => {
@@ -69,7 +72,7 @@ function LaptopSection({ padding }) {
   }, [laptopSectionData]);
 
   const onSubmit = (data) => {
-    console.log(data);
+    setFormData({ ...formData, ...data });
   };
 
   const LAPTOP_MEMORY_DATA = [
@@ -114,7 +117,7 @@ function LaptopSection({ padding }) {
             />
             <DropdownSelect
               name="laptop_brand_id"
-              options={cpus}
+              options={brands}
               control={control}
               errors={errors}
               placeholder="ლეპტოპის ბრენდი"
@@ -127,7 +130,7 @@ function LaptopSection({ padding }) {
           <StyledInLineInputsWrapper>
             <DropdownSelect
               name="laptop_cpu"
-              options={brands}
+              options={cpus}
               control={control}
               errors={errors}
               placeholder="CPU"

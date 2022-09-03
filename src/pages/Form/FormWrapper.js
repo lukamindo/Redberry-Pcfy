@@ -6,6 +6,7 @@ import { StyledFormWrapper, StyledRedberryImage } from "./FormWrapper.styled";
 import TabGroup from "library/component/tabs/Tabs";
 import BackIconButton from "library/component/button/BackIconButton";
 import redberrylogoicon from "assets/imgs/redberrylogoicon.svg";
+import { useNavigate } from "react-router-dom";
 
 function FormWrapper() {
   const types = [
@@ -15,19 +16,45 @@ function FormWrapper() {
   ];
 
   const [formPage, setFormPage] = useState(types[0].page);
+  const [formData, setFormData] = useState({ key: 1 });
+  const [employeeFormIsValid, setEmployeeFormIsValid] = useState("");
+
+  console.log(formData);
+
+  const navigate = useNavigate();
+
+  const navigationIconHandler = () => {
+    if (formPage === "employee") {
+      return () => navigate("/");
+    } else if (formPage === "laptop") {
+      return () => setFormPage("employee");
+    }
+  };
+
   return (
     <>
-      <BackIconButton onClickHandler={() => console.log("asdas")} />
+      <BackIconButton onClickHandler={navigationIconHandler()} />
       <StyledFormWrapper>
         <TabGroup
+          employeeFormIsValid={employeeFormIsValid}
           tabs={types}
           active={formPage}
           setActiveHandler={setFormPage}
         />
         {formPage === "employee" ? (
-          <EmployeeSection padding="96px 174px 44px 174px" />
+          <EmployeeSection
+            setEmployeeFormIsValid={setEmployeeFormIsValid}
+            setFormPage={setFormPage}
+            setFormData={setFormData}
+            padding="96px 174px 44px 174px"
+          />
         ) : formPage === "laptop" ? (
-          <LaptopSection padding="68px 174px 45px 174px" />
+          <LaptopSection
+            setFormPage={setFormPage}
+            setFormData={setFormData}
+            formData={formData}
+            padding="68px 174px 45px 174px"
+          />
         ) : null}
         <StyledRedberryImage
           src={redberrylogoicon}

@@ -44,12 +44,12 @@ export const schemaLaptop = yup.object().shape({
     )
     .required("ველის შევსება სავალდებულოა"),
   laptop_brand_id: yup.object().shape({
-    value: yup.string().required(),
-    label: yup.string().required(),
+    id: yup.number().required(),
+    name: yup.string().required(),
   }),
   laptop_cpu: yup.object().shape({
-    value: yup.string().required(),
-    label: yup.string().required(),
+    id: yup.number().required(),
+    name: yup.string().required(),
   }),
   laptop_cpu_cores: yup
     .string()
