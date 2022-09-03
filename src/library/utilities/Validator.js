@@ -1,7 +1,7 @@
 import * as yup from "yup";
 
 const geoRegex = /^[ა-ჰ]+$/;
-const emailRegex = /[a-z0-9](\.?[a-z0-9]){5,}@redberry\.ge$/;
+const emailRegex = /[a-z0-9](\.?[a-z0-9])@redberry\.ge$/;
 const numberRegex = /^(\+?995)?(79\d{7}|5\d{8})$/;
 const laptopNameRegex = /^[a-zA-Z0-9!@#$%^&*()_+=]*$/;
 const onlyNumberRegex = /^[0-9]*$/;
@@ -27,7 +27,6 @@ export const schemaEmployee = yup.object().shape({
   }),
   email: yup
     .string()
-    .email()
     .matches(emailRegex, "გამოიყენე @redberry.ge-ს იმეილი")
     .required("ველის შევსება სავალდებულოა"),
   phone_number: yup

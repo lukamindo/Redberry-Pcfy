@@ -20,8 +20,8 @@ export const StyledInputWrapper = styled.div`
   }
 
   input {
-    border-color: ${(props) => props.errors && "#E52F2F"};
     border: 1.8px solid #8ac0e2;
+    border-color: ${(props) => props.errors && "#E52F2F"};
     border-radius: 8px;
     width: ${(props) => props.width};
     height: 20px;
@@ -33,6 +33,7 @@ export const StyledInputWrapper = styled.div`
 
     &:focus {
       outline: none;
+      color: rgba(0, 0, 0, 1);
     }
   }
 `;

@@ -4,6 +4,9 @@ export const StyledFormWrapper = styled.div`
   background: #f7f7f7;
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 91px;
 `;
 
 export const StyledForm = styled.form`
@@ -58,4 +61,8 @@ export const StyledRadioSection = styled.div`
     height: 20px;
     margin-left: 14px;
   }
+`;
+
+export const StyledRedberryImage = styled.img`
+  margin: 67px 0 45px 0;
 `;
