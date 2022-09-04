@@ -5,6 +5,7 @@ const emailRegex = /[a-z0-9](\.?[a-z0-9])@redberry\.ge$/;
 const numberRegex = /^(\+?995)?(79\d{7}|5\d{8})$/;
 const laptopNameRegex = /^[a-zA-Z0-9!@#$%^&*()_+=]*$/;
 const onlyNumberRegex = /^[0-9]*$/;
+export const onlyNumberRegexNoZero = /^[1-9][0-9]*$/;
 
 export const schemaEmployee = yup.object().shape({
   name: yup
@@ -17,14 +18,11 @@ export const schemaEmployee = yup.object().shape({
     .matches(geoRegex, "გამოიყენე ქართული ასოები")
     .min(2, "უნდა შეიცვადეს მინიმუმ 2 სიმბოლოს")
     .required("ველის შევსება სავალდებულოა"),
-  team_id: yup.object().shape({
-    id: yup.number().required(),
-    name: yup.string().required(),
-  }),
-  position_id: yup.object().shape({
-    id: yup.number().required(),
-    name: yup.string().required(),
-  }),
+
+  team_id: yup.number().required(),
+
+  position_id: yup.number().required(),
+
   email: yup
     .string()
     .matches(emailRegex, "გამოიყენე @redberry.ge-ს იმეილი")
@@ -43,14 +41,11 @@ export const schemaLaptop = yup.object().shape({
       "შესაძლებელია შეიცავდეს მხოლოდ ლათინურ სიმბოლოებს, რიცხვებსა და !@#$%^&*()_+="
     )
     .required("ველის შევსება სავალდებულოა"),
-  laptop_brand_id: yup.object().shape({
-    id: yup.number().required(),
-    name: yup.string().required(),
-  }),
-  laptop_cpu: yup.object().shape({
-    id: yup.number().required(),
-    name: yup.string().required(),
-  }),
+
+  laptop_cpu: yup.string().required(),
+
+  laptop_brand_id: yup.number().required(),
+
   laptop_cpu_cores: yup
     .string()
     .matches(onlyNumberRegex, "მხოლოდ ციფრები")

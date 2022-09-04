@@ -1,7 +1,7 @@
 import {
   RadioButtonWrapper,
   StyledRadioSection,
-} from "pages/Form/FormWrapper.styled";
+} from "pages/Form/FormLayout.styled";
 import React from "react";
 import RadioButton from "./RadioButton";
 import radioerror from "assets/imgs/radioerror.svg";

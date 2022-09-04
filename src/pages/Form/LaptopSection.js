@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import Button from "library/component/button/Button";
 import Input from "library/component/input/TextInput";
@@ -8,19 +8,22 @@ import {
   StyledLaptopSectionOne,
   StyledLaptopSectionThree,
   StyledLaptopSectionTwo,
-} from "./FormWrapper.styled";
+} from "./FormLayout.styled";
 import DropdownSelect from "library/component/react-select/DropdownSelect";
 import { schemaLaptop } from "library/utilities/Validator";
 import { yupResolver } from "@hookform/resolvers/yup";
 import RadioButtonGroup from "library/component/radiobuttons/RadioButtonGroup";
 import useGetFetch from "library/utilities/useGetFetch";
 import FromatedTextInput from "library/component/input/FromatedTextInput";
+import { LAPTOP_MEMORY_DATA, LAPTOP_CONDITION_DATA } from "DATA";
+import { useData } from "library/utilities/DataContext";
 import { useNavigate } from "react-router-dom";
+import FileInput from "library/component/input/FileInput";
 
-function LaptopSection({ padding, formData, setFormData }) {
-  const [laptopSectionData, setLaptopSectionData] = useState(
-    JSON.parse(window.sessionStorage.getItem("LAPTOP_SECTION_DATA"))
-  );
+function LaptopSection() {
+  const { data, setValues } = useData();
+
+  const navigate = useNavigate();
 
   const { data: cpus } = useGetFetch(
     "https://pcfy.redberryinternship.ge/api/cpus"
@@ -34,29 +37,28 @@ function LaptopSection({ padding, formData, setFormData }) {
     control,
     handleSubmit,
     watch,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm({
     mode: "onSubmit",
     resolver: yupResolver(schemaLaptop),
     defaultValues: {
-      laptop_name: laptopSectionData?.laptop_name,
-      laptop_brand_id: laptopSectionData?.laptop_brand_id,
-      laptop_cpu: laptopSectionData?.laptop_cpu,
-      laptop_cpu_cores: laptopSectionData?.laptop_cpu_cores,
-      laptop_cpu_threads: laptopSectionData?.laptop_cpu_threads,
-      laptop_ram: laptopSectionData?.laptop_ram,
-      laptop_hard_drive_type: laptopSectionData?.laptop_hard_drive_type,
-      laptop_state: laptopSectionData?.laptop_state,
-      laptop_purchase_date: laptopSectionData?.laptop_purchase_date,
-      laptop_price: laptopSectionData?.laptop_price,
+      laptop_name: data?.laptop_name,
+      laptop_brand_id: data?.laptop_brand_id,
+      laptop_cpu: data?.laptop_cpu,
+      laptop_cpu_cores: data?.laptop_cpu_cores,
+      laptop_cpu_threads: data?.laptop_cpu_threads,
+      laptop_ram: data?.laptop_ram,
+      laptop_hard_drive_type: data?.laptop_hard_drive_type,
+      laptop_state: data?.laptop_state,
+      laptop_purchase_date: data?.laptop_purchase_date,
+      laptop_price: data?.laptop_price,
+      laptop_image: data?.laptop_image,
     },
   });
 
-  const navigate = useNavigate();
-
   useEffect(() => {
     const subscribe = watch((data) => {
-      setLaptopSectionData(data);
+      setValues(data);
     });
 
     return () => {
@@ -64,54 +66,32 @@ function LaptopSection({ padding, formData, setFormData }) {
     };
   }, [watch]);
 
-  useEffect(() => {
-    window.sessionStorage.setItem(
-      "LAPTOP_SECTION_DATA",
-      JSON.stringify(laptopSectionData)
-    );
-  }, [laptopSectionData]);
+  const entries = Object.entries(data);
 
-  const onSubmit = (data) => {
-    setFormData({ ...formData, ...data });
+  console.log(data);
+
+  const onSubmit = () => {
+    const formData = new FormData();
+
+    // console.log(Object.fromEntries(formData));
+
+    entries.forEach((entry) => {
+      formData.append(entry[0], entry[1]);
+    });
   };
-
-  const LAPTOP_MEMORY_DATA = [
-    {
-      id: "1",
-      value: "SSD",
-      register: "laptop_hard_drive_type",
-    },
-    {
-      id: "2",
-      value: "HDD",
-      register: "laptop_hard_drive_type",
-    },
-  ];
-
-  const LAPTOP_CONDITION_DATA = [
-    {
-      id: "3",
-      value: "ახალი",
-      register: "laptop_state",
-    },
-    {
-      id: "4",
-      value: "მეორადი",
-      register: "laptop_state",
-    },
-  ];
 
   return (
     <FormProvider register={register}>
-      <StyledForm padding={padding} onSubmit={handleSubmit(onSubmit)}>
+      <StyledForm>
         <StyledLaptopSectionOne>
+          <FileInput control={control} name="laptop_image" />
           <StyledInLineInputsWrapper>
             <Input
               hintMessage="ლათინური ასოები, ციფრები, !@#$%^&*()_+="
               label="ლეპტოპის სახელი"
               name="laptop_name"
               errors={errors}
-              register={register}
+              control={control}
               placeholder="HP"
               margin="0 63px 0 0 "
             />
@@ -141,8 +121,9 @@ function LaptopSection({ padding, formData, setFormData }) {
               hintMessage="მხოლოდ ციფრები"
               label="CPU-ს ბირთვი"
               name="laptop_cpu_cores"
+              valueInNumber
               errors={errors}
-              register={register}
+              control={control}
               placeholder="14"
               width="240.4px"
             />
@@ -150,8 +131,9 @@ function LaptopSection({ padding, formData, setFormData }) {
               hintMessage="მხოლოდ ციფრები"
               label="CPU-ს ნაკადი"
               name="laptop_cpu_threads"
+              valueInNumber
               errors={errors}
-              register={register}
+              control={control}
               placeholder="365"
               width="240.4px"
             />
@@ -161,15 +143,16 @@ function LaptopSection({ padding, formData, setFormData }) {
               hintMessage="მხოლოდ ციფრები"
               label="ლეპტოპის RAM (GB)"
               name="laptop_ram"
+              valueInNumber
               errors={errors}
-              register={register}
+              control={control}
               placeholder="16"
             />
             <RadioButtonGroup
               title="მეხსიერების ტიპი"
               data={LAPTOP_MEMORY_DATA}
               errors={errors}
-              state={laptopSectionData?.laptop_hard_drive_type}
+              state={data?.laptop_hard_drive_type}
             />
           </StyledInLineInputsWrapper>
         </StyledLaptopSectionTwo>
@@ -189,8 +172,9 @@ function LaptopSection({ padding, formData, setFormData }) {
               hintMessage="მხოლოდ ციფრები"
               label="ლეპტოპის ფასი"
               name="laptop_price"
+              valueInNumber
               errors={errors}
-              register={register}
+              control={control}
               placeholder="0000"
             />
           </StyledInLineInputsWrapper>
@@ -199,7 +183,7 @@ function LaptopSection({ padding, formData, setFormData }) {
               title="ლეპტოპის მდგომარეობა"
               data={LAPTOP_CONDITION_DATA}
               errors={errors}
-              state={laptopSectionData?.laptop_state}
+              state={data?.laptop_state}
             />
           </StyledInLineInputsWrapper>
         </StyledLaptopSectionThree>

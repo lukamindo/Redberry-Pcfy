@@ -1,23 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Button from "library/component/button/Button";
 import Input from "library/component/input/TextInput";
-import { StyledForm, StyledEmployeeSectionOne } from "./FormWrapper.styled";
+import { StyledForm, StyledEmployeeSectionOne } from "./FormLayout.styled";
 import DropdownSelect from "library/component/react-select/DropdownSelect";
 import { schemaEmployee } from "library/utilities/Validator";
 import { yupResolver } from "@hookform/resolvers/yup";
 import useGetFetch from "library/utilities/useGetFetch";
 import FromatedTextInput from "library/component/input/FromatedTextInput";
+import { useData } from "library/utilities/DataContext";
+import { useNavigate } from "react-router-dom";
 
-function EmployeeSection({
-  padding,
-  setFormData,
-  setFormPage,
-  setEmployeeFormIsValid,
-}) {
-  const [employeeSectionData, setEmployeeSectionData] = useState(
-    JSON.parse(window.sessionStorage.getItem("EMPLOYEE_SECTION_DATA"))
-  );
+function EmployeeSection() {
+  const { data, setValues } = useData();
+  const navigate = useNavigate();
 
   const { data: team } = useGetFetch(
     "https://pcfy.redberryinternship.ge/api/teams"
@@ -26,36 +22,29 @@ function EmployeeSection({
     "https://pcfy.redberryinternship.ge/api/positions"
   );
 
-  const { register, control, handleSubmit, watch, formState } = useForm({
+  const {
+    control,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm({
     mode: "onSubmit",
     resolver: yupResolver(schemaEmployee),
     defaultValues: {
-      name: employeeSectionData?.name,
-      surname: employeeSectionData?.surname,
-      team_id: employeeSectionData?.team_id,
-      position_id: employeeSectionData?.position_id,
-      phone_number: employeeSectionData?.phone_number,
-      email: employeeSectionData?.email,
+      name: data?.name,
+      surname: data?.surname,
+      team_id: data?.team_id,
+      position_id: data?.position_id,
+      phone_number: data?.phone_number,
+      email: data?.email,
     },
   });
 
-  const { errors, isValid } = formState;
-
-  useEffect(() => {
-    setEmployeeFormIsValid(isValid);
-  }, [formState]);
-
-  useEffect(() => {
-    window.sessionStorage.setItem(
-      "EMPLOYEE_SECTION_DATA",
-      JSON.stringify(employeeSectionData)
-    );
-  }, [employeeSectionData]);
+  console.log(data);
 
   useEffect(() => {
     const subscribe = watch((data) => {
-      // console.log(data);
-      setEmployeeSectionData(data);
+      setValues(data);
     });
 
     return () => {
@@ -63,20 +52,19 @@ function EmployeeSection({
     };
   }, [watch]);
 
-  const onSubmit = (data) => {
-    setFormData(data);
-    if (isValid) setFormPage("laptop");
+  const onSubmit = () => {
+    navigate("/form/2");
   };
 
   return (
-    <StyledForm padding={padding} onSubmit={handleSubmit(onSubmit)}>
+    <StyledForm onSubmit={handleSubmit(onSubmit)}>
       <StyledEmployeeSectionOne>
         <Input
           hintMessage="მინიმუმ 2 სიმბოლო, ქართული ასოები"
           label="სახელი"
           name="name"
           errors={errors}
-          register={register}
+          control={control}
           placeholder="გრიშა"
           margin="0px 63px 0px 0px"
         />
@@ -86,7 +74,7 @@ function EmployeeSection({
           label="გვარი"
           name="surname"
           errors={errors}
-          register={register}
+          control={control}
           placeholder="ბაგრატიონი"
         />
       </StyledEmployeeSectionOne>
@@ -116,7 +104,7 @@ function EmployeeSection({
         label="მეილი"
         name="email"
         errors={errors}
-        register={register}
+        control={control}
         placeholder="grish666@redberry.ge"
         margin="51px 0 0 0"
         width="842.4px"

@@ -1,15 +1,25 @@
-import FormWrapper from "pages/Form/FormWrapper";
+import { Route, Routes } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import Landing from "pages/Landing/Landing";
 import SubmitPage from "pages/Pop-up/SubmitPage";
-import { Route, Routes } from "react-router-dom";
+import LaptopInnerPage from "pages/Results/LaptopInnerPage";
+import EmployeeSection from "pages/Form/EmployeeSection";
+import LaptopSection from "pages/Form/LaptopSection";
+import FormLayout from "pages/Form/FormLayout";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Landing />} />
-      <Route path="/form" element={<FormWrapper />} />
-      <Route path="/submit" element={<SubmitPage />} />
-    </Routes>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route element={<FormLayout />}>
+          <Route path="/form/1" element={<EmployeeSection />} />
+          <Route path="/form/2" element={<LaptopSection />} />
+        </Route>
+        <Route path="/submit" element={<SubmitPage />} />
+        <Route path="/laptop" element={<LaptopInnerPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

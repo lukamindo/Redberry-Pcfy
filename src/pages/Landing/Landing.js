@@ -11,10 +11,10 @@ function Landing() {
     <LandingWrapper>
       <img src={logo} alt="redberry" />
       <img className="second_img" src={landingimg} alt="PCfy" />
-      <Button onClick={() => navigate("/form")} margin=" 123px 0 0 0 ">
+      <Button onClick={() => navigate("/form/1")} margin=" 123px 0 0 0 ">
         ჩანაწერის დამატება
       </Button>
-      <Button onClick={() => navigate("/form")} margin=" 26px 0 147px 0 ">
+      <Button onClick={() => navigate("/form.1")} margin=" 26px 0 147px 0 ">
         ჩანაწერების სია
       </Button>
     </LandingWrapper>
