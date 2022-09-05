@@ -10,4 +10,11 @@ export const StyledResultsWrapper = styled.div`
     font-size: 34px;
     margin: 78px 0 90px 0;
   }
+
+  @media (max-width: 391px) {
+    > p {
+      font-size: 16px;
+      margin: 31px 0 33px 0;
+    }
+  }
 `;

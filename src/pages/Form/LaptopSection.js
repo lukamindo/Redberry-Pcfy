@@ -4,6 +4,7 @@ import Button from "library/component/button/Button";
 import Input from "library/component/input/TextInput";
 import {
   StyledForm,
+  StyledForm2MobileButtonWrapper,
   StyledInLineInputsWrapper,
   StyledLaptopSectionOne,
   StyledLaptopSectionThree,
@@ -19,9 +20,11 @@ import { LAPTOP_MEMORY_DATA, LAPTOP_CONDITION_DATA, TOKEN } from "DATA";
 import { useData } from "library/utilities/DataContext";
 import { useNavigate } from "react-router-dom";
 import FileInput from "library/component/input/FileInput";
+import { useMediaQuery } from "react-responsive";
 
 function LaptopSection() {
   const { data, setValues } = useData();
+  const phone = useMediaQuery({ query: "(max-width: 391px)" });
 
   const navigate = useNavigate();
 
@@ -117,7 +120,7 @@ function LaptopSection() {
               errors={errors}
               control={control}
               placeholder="HP"
-              margin="0 63px 0 0 "
+              margin={phone ? "" : "0 63px 0 0"}
             />
             <DropdownSelect
               name="laptop_brand_id"
@@ -139,7 +142,6 @@ function LaptopSection() {
               errors={errors}
               placeholder="CPU"
               width="277px"
-              margin=""
             />
             <Input
               hintMessage="მხოლოდ ციფრები"
@@ -211,12 +213,12 @@ function LaptopSection() {
             />
           </StyledInLineInputsWrapper>
         </StyledLaptopSectionThree>
-        <StyledInLineInputsWrapper>
+        <StyledForm2MobileButtonWrapper>
           <Button
             font="18px"
             backgroundColor="#ffffff"
             textAlign="left"
-            width="297px"
+            width={phone ? "40px" : "297px"}
             fontColor="#0089A7"
             onClick={() => navigate("/form/1")}
           >
@@ -225,7 +227,7 @@ function LaptopSection() {
           <Button type="submit" width="219px">
             დამახსოვრება
           </Button>
-        </StyledInLineInputsWrapper>
+        </StyledForm2MobileButtonWrapper>
       </StyledForm>
     </FormProvider>
   );

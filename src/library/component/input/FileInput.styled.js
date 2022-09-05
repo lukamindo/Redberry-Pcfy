@@ -10,8 +10,16 @@ export const StyledFileUploadWrapper = styled.div`
     props.errors ? "2px dashed #E52F2F" : "2px dashed #4386a9"};
   border-radius: 18px;
   height: 423px;
-
   width: 878px;
+
+  @media (max-width: 391px) {
+    img {
+      width: 358px;
+      height: 244px;
+    }
+    width: 358px;
+    height: 244px;
+  }
 `;
 export const StyledFileUploadText = styled.p`
   color: #4386a9;
@@ -59,6 +67,10 @@ export const StyledFileInput = styled.div`
   font-size: 20px;
 
   color: #ffffff;
+
+  @media (max-width: 391px) {
+    width: 100px;
+  }
 `;
 
 export const StyledFileInputErrorImage = styled.img`

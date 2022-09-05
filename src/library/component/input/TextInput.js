@@ -7,6 +7,7 @@ import {
   StyledInput,
 } from "./TextInput.styled";
 import { onlyNumberRegexNoZero } from "library/utilities/Validator";
+import { useMediaQuery } from "react-responsive";
 
 const TextInput = ({
   name,
@@ -26,6 +27,8 @@ const TextInput = ({
     control,
   });
 
+  const phone = useMediaQuery({ query: "(max-width: 391px)" });
+
   const myOnChange = (value) => {
     if (onlyNumberRegexNoZero.test(value)) {
       onChange(Number(value));
@@ -35,7 +38,11 @@ const TextInput = ({
   };
 
   return (
-    <StyledInputWrapper width={width} margin={margin} errors={errors?.[name]}>
+    <StyledInputWrapper
+      width={phone ? "330px" : width}
+      margin={margin}
+      errors={errors?.[name]}
+    >
       {label && <StyledInputLabel>{label}</StyledInputLabel>}
       <StyledInput
         type="text"

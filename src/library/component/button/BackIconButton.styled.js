@@ -6,4 +6,9 @@ export const StyledBackIconButton = styled.div`
   top: 53px;
   left: 70px;
   position: absolute;
+
+  @media (max-width: 391px) {
+    top: 34px;
+    left: 16px;
+  }
 `;

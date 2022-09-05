@@ -6,6 +6,9 @@ export const StyledSubmitPageBackGround = styled.div`
   align-items: center;
   justify-content: center;
   height: 1080px;
+  @media (max-width: 391px) {
+    height: 844px;
+  }
 `;
 
 export const StyledPopUpModal = styled.div`
@@ -24,5 +27,18 @@ export const StyledPopUpModal = styled.div`
     font-weight: 700;
     font-size: 25px;
     color: #292929;
+  }
+
+  @media (max-width: 391px) {
+    width: 100%;
+    height: 100%;
+    img {
+      margin-top: 20px;
+    }
+
+    p {
+      max-width: 200px;
+      text-align: center;
+    }
   }
 `;

@@ -7,6 +7,7 @@ import {
   StyledInputMessage,
   StyledInputWrapper,
 } from "./TextInput.styled";
+import { useMediaQuery } from "react-responsive";
 
 const FromatedTextInput = ({
   name,
@@ -26,6 +27,8 @@ const FromatedTextInput = ({
     name,
     control,
   });
+
+  const phone = useMediaQuery({ query: "(max-width: 391px)" });
 
   const myOnChange = () => {
     if (cleaveInstance !== null) {
@@ -53,7 +56,11 @@ const FromatedTextInput = ({
 
   return (
     <>
-      <StyledInputWrapper width={width} margin={margin} errors={errors?.[name]}>
+      <StyledInputWrapper
+        width={phone ? "330px" : width}
+        margin={margin}
+        errors={errors?.[name]}
+      >
         {label && <StyledInputLabel>{label}</StyledInputLabel>}
         <Cleave
           value={value}

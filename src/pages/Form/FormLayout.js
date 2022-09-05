@@ -7,11 +7,15 @@ import {
   StyledFormLayoutWrapper,
   StyledFormFotterContainer,
   StyledFormHeader,
+  StyledFormPhoneTitle,
 } from "./FormLayout.styled";
 import { Tabs } from "DATA";
+import { useMediaQuery } from "react-responsive";
 
 const FormLayout = () => {
   const url = useLocation();
+
+  const phone = useMediaQuery({ query: "(max-width: 391px)" });
 
   const BackIconButtonHandler = () => {
     if (url.pathname === "/form/1") {
@@ -25,14 +29,27 @@ const FormLayout = () => {
     <>
       <StyledFormHeader>
         <BackIconButton onClickHandler={BackIconButtonHandler()} />
-        <TabGroup tabs={Tabs} />
+        {phone ? (
+          <StyledFormPhoneTitle>
+            <p>
+              {url.pathname === "/form/1"
+                ? "თანამშრომლების ინფო"
+                : "ლეპტოპის მახასიათებლები"}
+            </p>
+            <span>{`${url.pathname.slice(-1)}/2`}</span>
+          </StyledFormPhoneTitle>
+        ) : (
+          <TabGroup tabs={Tabs} />
+        )}
       </StyledFormHeader>
       <StyledFormLayoutWrapper>
         <Outlet />
       </StyledFormLayoutWrapper>
-      <StyledFormFotterContainer>
-        <img src={redberrylogoicon} alt="redberry_pcfy_development" />
-      </StyledFormFotterContainer>
+      {!phone && (
+        <StyledFormFotterContainer>
+          <img src={redberrylogoicon} alt="redberry_pcfy_development" />
+        </StyledFormFotterContainer>
+      )}
     </>
   );
 };

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Controller } from "react-hook-form";
+import { useMediaQuery } from "react-responsive";
 import Select from "react-select";
 
 const DropdownSelect = ({
@@ -11,10 +12,12 @@ const DropdownSelect = ({
   control,
   errors,
 }) => {
+  const phone = useMediaQuery({ query: "(max-width: 391px)" });
+
   const customStyles = {
     container: (styles) => ({
       ...styles,
-      width: width,
+      width: phone ? "370px" : width,
       height: "60px",
       margin: margin,
     }),
@@ -39,7 +42,7 @@ const DropdownSelect = ({
     }),
     menu: (styles) => ({
       ...styles,
-      width: width,
+      width: phone ? "370px" : width,
       margin: "0",
       borderRadius: "8px",
       filter: "drop-shadow(0px 4px 34px rgba(0, 0, 0, 0.25))",

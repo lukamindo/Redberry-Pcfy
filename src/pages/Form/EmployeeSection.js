@@ -10,10 +10,12 @@ import useGetFetch from "library/utilities/useGetFetch";
 import FromatedTextInput from "library/component/input/FromatedTextInput";
 import { useData } from "library/utilities/DataContext";
 import { useNavigate } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
 
 function EmployeeSection() {
   const { data, setValues } = useData();
   const navigate = useNavigate();
+  const phone = useMediaQuery({ query: "(max-width: 391px)" });
 
   const { data: team } = useGetFetch(
     "https://pcfy.redberryinternship.ge/api/teams"
@@ -65,7 +67,7 @@ function EmployeeSection() {
           errors={errors}
           control={control}
           placeholder="გრიშა"
-          margin="0px 63px 0px 0px"
+          // margin="0px 63px 0px 0px"
         />
 
         <Input
@@ -120,7 +122,11 @@ function EmployeeSection() {
         width="842.4px"
       />
 
-      <Button type="submit" width="176px" margin="95px 0 0 702px">
+      <Button
+        type="submit"
+        width="176px"
+        margin={phone ? "43px 0 58px 190px" : "95px 0 0 702px"}
+      >
         შემდეგი
       </Button>
     </StyledForm>

@@ -9,7 +9,6 @@ const ResultList = () => {
     `https://pcfy.redberryinternship.ge/api/laptops?token=${TOKEN}`
   );
 
-  console.log(data?.reverse());
   return (
     <StyledResultListWrapper>
       {data?.map((item) => {

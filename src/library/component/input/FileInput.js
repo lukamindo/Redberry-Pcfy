@@ -34,8 +34,6 @@ const FileInput = ({ control, name, errors }) => {
     }
   };
 
-  console.log(errors[name]);
-
   const convertBase64 = (file) => {
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
