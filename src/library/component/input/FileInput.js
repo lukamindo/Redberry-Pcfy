@@ -5,11 +5,14 @@ import {
   StyledFileDescripton,
   StyledFileDescriptonWrapper,
   StyledFileInput,
+  StyledFileInputErrorImage,
+  StyledFileUploadSucces,
   StyledFileUploadText,
   StyledFileUploadWrapper,
 } from "./FileInput.styled";
 import Button from "../button/Button";
 import Vector from "assets/imgs/Vector.svg";
+import radioerror from "assets/imgs/radioerror.svg";
 
 const FileInput = ({ control, name, errors }) => {
   const [image, setImage] = useState(null);
@@ -30,6 +33,8 @@ const FileInput = ({ control, name, errors }) => {
       setImage(fileImage);
     }
   };
+
+  console.log(errors[name]);
 
   const convertBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -52,12 +57,15 @@ const FileInput = ({ control, name, errors }) => {
         <>
           {image ? (
             <>
-              <StyledFileUploadWrapper errors={errors.name} {...getRootProps()}>
+              <StyledFileUploadWrapper
+                {...getRootProps()}
+                errors={errors[name]}
+              >
                 <img src={image} />
               </StyledFileUploadWrapper>
               <StyledFileDescriptonWrapper>
                 <StyledFileDescripton>
-                  <img src={Vector} />
+                  <StyledFileUploadSucces src={Vector} />
                   <p>{file.name}</p>
                   <p>{`${(file.size / Math.pow(1024, 2)).toFixed(2)} mb`}</p>
                 </StyledFileDescripton>
@@ -73,7 +81,13 @@ const FileInput = ({ control, name, errors }) => {
               </StyledFileDescriptonWrapper>
             </>
           ) : (
-            <StyledFileUploadWrapper {...getRootProps()}>
+            <StyledFileUploadWrapper {...getRootProps()} errors={errors[name]}>
+              {errors[name] && (
+                <StyledFileInputErrorImage
+                  src={radioerror}
+                  alt="redberry_best_companyy_ever_;)"
+                />
+              )}
               <StyledFileUploadText>
                 ჩააგდე ან ატვირთე ლეპტოპის ფოტო
               </StyledFileUploadText>
@@ -95,16 +109,3 @@ const FileInput = ({ control, name, errors }) => {
 };
 
 export default FileInput;
-
-{
-  /* <div {...getRootProps}>
-                <h4>chaagde file aq </h4>
-                <input
-                  type="file"
-                  {...getInputProps}
-                  name={name}
-                  onBlur={onBlur}
-                />
-                <p>aq iqneba</p>
-              </div> */
-}

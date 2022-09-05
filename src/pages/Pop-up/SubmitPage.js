@@ -14,7 +14,11 @@ function SubmitPage() {
       <StyledPopUpModal>
         <img src={SubmitIcon}></img>
         <p>ჩანაწერი დამატებულია!</p>
-        <Button margin="79px 275px 0 275px" width="297px">
+        <Button
+          margin="79px 275px 0 275px"
+          width="297px"
+          onClick={() => navigate("/results")}
+        >
           სიაში გადაყვანა
         </Button>
         <Button

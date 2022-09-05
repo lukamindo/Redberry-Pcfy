@@ -89,7 +89,6 @@ function LaptopSection() {
     onlyIdSelectKeys.forEach((key) => formData.append(key, data[key].id));
     formData.append("laptop_cpu", data["laptop_cpu"].name);
     formData.append("token", TOKEN);
-    console.log(Object.fromEntries(formData));
 
     const res = await fetch(
       "https://pcfy.redberryinternship.ge/api/laptop/create",
@@ -99,7 +98,10 @@ function LaptopSection() {
       }
     );
 
-    console.log(res.status);
+    if (res.status == 200) {
+      sessionStorage.removeItem("FORM_DATA");
+      navigate("/submit");
+    }
   };
 
   return (
@@ -185,8 +187,8 @@ function LaptopSection() {
               label="შეძენის რიცხვი (არჩევითი)"
               name="laptop_purchase_date"
               control={control}
-              formatType="date"
               errors={errors}
+              formatType="date"
               placeholder="დდ / თთ / წწწწ"
               margin="0 0 18.66px 0"
             />

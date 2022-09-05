@@ -12,13 +12,7 @@ export const StyledFileUploadWrapper = styled.div`
   height: 423px;
 
   width: 878px;
-  & img {
-    width: 100%;
-    height: 100%;
-    border-radius: 18px;
-  }
 `;
-
 export const StyledFileUploadText = styled.p`
   color: #4386a9;
   font-size: 20px;
@@ -43,6 +37,11 @@ export const StyledFileDescripton = styled.div`
     height: 22px;
   }
 `;
+export const StyledFileUploadSucces = styled.img`
+  width: 100%;
+  height: 100%;
+  border-radius: 18px;
+`;
 
 export const StyledFileInput = styled.div`
   display: inline-flex;
@@ -60,4 +59,10 @@ export const StyledFileInput = styled.div`
   font-size: 20px;
 
   color: #ffffff;
+`;
+
+export const StyledFileInputErrorImage = styled.img`
+  width: 35px;
+  height: 35px;
+  margin-bottom: 15px;
 `;
