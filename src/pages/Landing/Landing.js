@@ -14,7 +14,7 @@ function Landing() {
       <Button onClick={() => navigate("/form/1")} margin=" 123px 0 0 0 ">
         ჩანაწერის დამატება
       </Button>
-      <Button onClick={() => navigate("/form.1")} margin=" 26px 0 147px 0 ">
+      <Button onClick={() => navigate("/results")} margin=" 26px 0 147px 0 ">
         ჩანაწერების სია
       </Button>
     </LandingWrapper>

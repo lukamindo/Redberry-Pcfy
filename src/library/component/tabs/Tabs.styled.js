@@ -1,14 +1,19 @@
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 
-export const StyledNavLink = styled(NavLink)`
-  color: #232323;
-  font-size: 20px;
-  font-weight: 700;
-  padding: 0px 33px;
-  background: #f7f7f7;
-`;
-
 export const ButtonGroup = styled.div`
   display: flex;
+`;
+
+export const StyledNavLink = styled.span`
+  a.active::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 60%;
+    height: 2px;
+    background: black;
+    transform: translateX(-50%);
+  }
 `;

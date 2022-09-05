@@ -6,6 +6,8 @@ import LaptopInnerPage from "pages/Results/LaptopInnerPage";
 import EmployeeSection from "pages/Form/EmployeeSection";
 import LaptopSection from "pages/Form/LaptopSection";
 import FormLayout from "pages/Form/FormLayout";
+import ResultList from "pages/Results/ResultList";
+import ResultLayout from "pages/Results/ResultLayout";
 
 function App() {
   return (
@@ -16,8 +18,11 @@ function App() {
           <Route path="/form/1" element={<EmployeeSection />} />
           <Route path="/form/2" element={<LaptopSection />} />
         </Route>
+        <Route element={<ResultLayout />}>
+          <Route path="/results" element={<ResultList />} />
+          <Route path="/results/:id" element={<LaptopInnerPage />} />
+        </Route>
         <Route path="/submit" element={<SubmitPage />} />
-        <Route path="/laptop" element={<LaptopInnerPage />} />
       </Routes>
     </BrowserRouter>
   );

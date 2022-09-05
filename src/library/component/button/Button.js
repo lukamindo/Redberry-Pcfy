@@ -13,9 +13,11 @@ const Button = ({
   fontColor = "#ffffff",
   margin,
   textAlign = "center",
+  type = "button",
 }) => {
   return (
     <StyledButton
+      type={type}
       onClick={onClick}
       border={border}
       backgroundColor={backgroundColor}

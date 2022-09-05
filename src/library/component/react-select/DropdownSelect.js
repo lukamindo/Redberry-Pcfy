@@ -1,5 +1,4 @@
-import { useData } from "library/utilities/DataContext";
-import React from "react";
+import React, { useState } from "react";
 import { Controller } from "react-hook-form";
 import Select from "react-select";
 
@@ -12,8 +11,6 @@ const DropdownSelect = ({
   control,
   errors,
 }) => {
-  const { data } = useData();
-
   const customStyles = {
     container: (styles) => ({
       ...styles,
@@ -89,12 +86,6 @@ const DropdownSelect = ({
               placeholder={placeholder}
               isSearchable={false}
               {...field}
-              onChange={(e) =>
-                placeholder === "CPU"
-                  ? field.onChange(e.name)
-                  : field.onChange(e.id)
-              }
-              // value={options[data.name - 1]}
             />
           );
         }}

@@ -19,9 +19,15 @@ export const schemaEmployee = yup.object().shape({
     .min(2, "უნდა შეიცვადეს მინიმუმ 2 სიმბოლოს")
     .required("ველის შევსება სავალდებულოა"),
 
-  team_id: yup.number().required(),
+  team_id: yup.object().shape({
+    id: yup.string().required(),
+    name: yup.string().required(),
+  }),
 
-  position_id: yup.number().required(),
+  position_id: yup.object().shape({
+    id: yup.string().required(),
+    name: yup.string().required(),
+  }),
 
   email: yup
     .string()
@@ -42,9 +48,15 @@ export const schemaLaptop = yup.object().shape({
     )
     .required("ველის შევსება სავალდებულოა"),
 
-  laptop_cpu: yup.string().required(),
+  laptop_cpu: yup.object().shape({
+    id: yup.string().required(),
+    name: yup.string().required(),
+  }),
 
-  laptop_brand_id: yup.number().required(),
+  laptop_brand_id: yup.object().shape({
+    id: yup.string().required(),
+    name: yup.string().required(),
+  }),
 
   laptop_cpu_cores: yup
     .string()
@@ -64,4 +76,5 @@ export const schemaLaptop = yup.object().shape({
     .required("ველის შევსება სავალდებულოა"),
   laptop_hard_drive_type: yup.string().required(),
   laptop_state: yup.string().required(),
+  laptop_image: yup.string().required(),
 });

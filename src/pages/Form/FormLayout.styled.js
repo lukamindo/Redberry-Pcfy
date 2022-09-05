@@ -6,7 +6,7 @@ export const StyledFormLayoutWrapper = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  padding-top: 91px;
+  margin-top: 45px;
 `;
 
 export const StyledForm = styled.form`
@@ -72,4 +72,5 @@ export const StyledFormFotterContainer = styled.div`
 export const StyledFormHeader = styled.div`
   display: flex;
   justify-content: center;
+  padding-top: 91px;
 `;

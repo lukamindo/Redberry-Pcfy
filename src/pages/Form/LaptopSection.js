@@ -15,7 +15,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import RadioButtonGroup from "library/component/radiobuttons/RadioButtonGroup";
 import useGetFetch from "library/utilities/useGetFetch";
 import FromatedTextInput from "library/component/input/FromatedTextInput";
-import { LAPTOP_MEMORY_DATA, LAPTOP_CONDITION_DATA } from "DATA";
+import { LAPTOP_MEMORY_DATA, LAPTOP_CONDITION_DATA, TOKEN } from "DATA";
 import { useData } from "library/utilities/DataContext";
 import { useNavigate } from "react-router-dom";
 import FileInput from "library/component/input/FileInput";
@@ -66,25 +66,47 @@ function LaptopSection() {
     };
   }, [watch]);
 
-  const entries = Object.entries(data);
+  const onlyIdSelectKeys = ["team_id", "position_id", "laptop_brand_id"];
+  const onlyValuesKeys = [
+    "name",
+    "surname",
+    "phone_number",
+    "email",
+    "laptop_name",
+    "laptop_image",
+    "laptop_cpu_cores",
+    "laptop_cpu_threads",
+    "laptop_ram",
+    "laptop_hard_drive_type",
+    "laptop_state",
+    "laptop_purchase_date",
+    "laptop_price",
+  ];
 
-  console.log(data);
-
-  const onSubmit = () => {
+  const onSubmit = async () => {
     const formData = new FormData();
+    onlyValuesKeys.forEach((key) => formData.append(key, data[key]));
+    onlyIdSelectKeys.forEach((key) => formData.append(key, data[key].id));
+    formData.append("laptop_cpu", data["laptop_cpu"].name);
+    formData.append("token", TOKEN);
+    console.log(Object.fromEntries(formData));
 
-    // console.log(Object.fromEntries(formData));
+    const res = await fetch(
+      "https://pcfy.redberryinternship.ge/api/laptop/create",
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
 
-    entries.forEach((entry) => {
-      formData.append(entry[0], entry[1]);
-    });
+    console.log(res.status);
   };
 
   return (
     <FormProvider register={register}>
-      <StyledForm>
+      <StyledForm onSubmit={handleSubmit(onSubmit)}>
         <StyledLaptopSectionOne>
-          <FileInput control={control} name="laptop_image" />
+          <FileInput control={control} errors={errors} name="laptop_image" />
           <StyledInLineInputsWrapper>
             <Input
               hintMessage="ლათინური ასოები, ციფრები, !@#$%^&*()_+="
@@ -194,10 +216,13 @@ function LaptopSection() {
             textAlign="left"
             width="297px"
             fontColor="#0089A7"
+            onClick={() => navigate("/form/1")}
           >
             უკან
           </Button>
-          <Button width="219px">დამახსოვრება</Button>
+          <Button type="submit" width="219px">
+            დამახსოვრება
+          </Button>
         </StyledInLineInputsWrapper>
       </StyledForm>
     </FormProvider>

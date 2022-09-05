@@ -20,7 +20,7 @@ export default function RadioButtonGroup({ state, data, title, errors }) {
               name={data.register}
               key={data.value}
               state={state}
-              label={data.value}
+              label={data.title}
               value={data.value}
             />
           );

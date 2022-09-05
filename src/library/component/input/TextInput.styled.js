@@ -28,12 +28,13 @@ export const StyledInputWrapper = styled.div`
     padding: 20px 16px;
     font-weight: 400;
     font-size: 16px;
-    color: rgba(0, 0, 0, 0.6);
+    color: rgba(0, 0, 0);
     margin: 8px 0px;
 
     &:focus {
       outline: none;
       color: rgba(0, 0, 0, 1);
+      border-color: #6499ff;
     }
   }
 `;

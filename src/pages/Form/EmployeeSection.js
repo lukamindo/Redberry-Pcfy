@@ -26,9 +26,9 @@ function EmployeeSection() {
     control,
     handleSubmit,
     watch,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm({
-    mode: "onSubmit",
+    mode: "onBlur",
     resolver: yupResolver(schemaEmployee),
     defaultValues: {
       name: data?.name,
@@ -40,10 +40,9 @@ function EmployeeSection() {
     },
   });
 
-  console.log(data);
-
   useEffect(() => {
     const subscribe = watch((data) => {
+      setValues({ activeSecondTab: isValid });
       setValues(data);
     });
 
@@ -96,7 +95,6 @@ function EmployeeSection() {
         placeholder="პოზიცია"
         width="878px"
         margin="53px 0 0 0 "
-        onChange={(option) => console.log(option)}
       />
 
       <Input
@@ -122,7 +120,7 @@ function EmployeeSection() {
         width="842.4px"
       />
 
-      <Button width="176px" margin="95px 0 0 702px">
+      <Button type="submit" width="176px" margin="95px 0 0 702px">
         შემდეგი
       </Button>
     </StyledForm>

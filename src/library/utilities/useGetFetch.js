@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-export default function useGetFetch(url) {
-  const [data, setData] = useState(null);
+export default function useGetFetch(url, defaultData = null) {
+  const [data, setData] = useState(defaultData);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     axios
@@ -13,8 +14,11 @@ export default function useGetFetch(url) {
       })
       .catch((err) => {
         setError(err);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, [url]);
 
-  return { data, error };
+  return { data, error, loading };
 }
